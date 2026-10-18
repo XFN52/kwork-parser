@@ -1,0 +1,21 @@
+[Unit]
+Description=Kwork Parser and Telegram Alert Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/kwork-parser
+EnvironmentFile=/opt/kwork-parser/.env
+ExecStart=/opt/kwork-parser/venv/bin/python -m src.main
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Security sandbox
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,32 @@
+# Version control
+.git/
+.gitignore
+
+# Environment & Secrets
+.env
+.env.*
+
+# Local data & logs
+data/
+logs/
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+venv/
+.venv/
+env/
+ENV/
+
+# Tests & IDE
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+.vscode/
+.idea/
+
+# Documentation & notes
+*.md

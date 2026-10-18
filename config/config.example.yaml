@@ -1,0 +1,110 @@
+# ========================================================
+# Kwork Parser & Telegram Bot Configuration
+# ========================================================
+
+# Периодичность опроса биржи Kwork в секундах
+poll_interval_seconds: 60
+
+# Случайный разброс времени задержки (+/- секунд) для исключения циклических шаблонов
+poll_jitter_seconds: 15
+
+# Путь к файлу базы данных SQLite (дедупликация и история заказов)
+database_path: "data/kwork_parser.db"
+
+# Уровень логирования: DEBUG, INFO, WARNING, ERROR
+log_level: "INFO"
+
+# Путь к файлу логов с автоматической ротацией (null если только консоль)
+log_file: "logs/kwork_parser.log"
+
+# Настройки прокси (опционально, полезно при блокировках на VPS)
+# Формат: "http://user:pass@host:port" или "socks5://host:port"
+proxy: null
+
+# Настройки Telegram-бота
+telegram:
+  # Токен вашего бота, полученный у @BotFather
+  # Можно также передать через переменную окружения TELEGRAM_BOT_TOKEN
+  bot_token: ""
+
+  # Список ID чатов/пользователей, куда отправлять уведомления
+  # Можно также передать через TELEGRAM_CHAT_IDS="12345678,98765432"
+  chat_ids:
+    - 0
+
+  # Отправлять ли выжимку текста описания заказа
+  send_previews: true
+
+  # Максимальная длина выжимки описания (в символах)
+  preview_length: 350
+
+# Критерии фильтрации заказов
+filters:
+  # Категории Kwork (числовые ID):
+  # 11: "Разработка и IT"
+  # 15: "Дизайн"
+  # 5:  "Тексты и переводы"
+  # 17: "SEO и трафик"
+  # 45: "Соцсети и маркетинг"
+  # 7:  "Аудио, видео, съемка"
+  # 83: "Бизнес и жизнь"
+  # Пустой список [] означает парсинг всех категорий без фильтра
+  categories:
+    - 11
+
+  # Ключевые слова (позитивный фильтр):
+  # Если список не пуст, проект обязан содержать хотя бы одно из этих слов в заголовке или описании
+  # Пустой список [] означает приём всех проектов
+  keywords:
+    - "python"
+    - "парсер"
+    - "парс"
+    - "бот"
+    - "telegram"
+    - "скрипт"
+    - "fastapi"
+    - "django"
+    - "api"
+    - "веб-скрейпинг"
+
+  # Стоп-слова (минус-слова):
+  # Если в заголовке или описании найдено любое из этих слов — проект отбрасывается
+  stop_words:
+    - "1с"
+    - "1c"
+    - "курсовая"
+    - "диплом"
+    - "bitrix"
+    - "битрикс"
+
+  # Минимальный бюджет (в рублях). 0 — без ограничения снизу
+  min_price: 1000
+
+  # Максимальный бюджет (в рублях). null — без ограничения сверху
+  max_price: null
+
+  # Максимальное количество откликов у заказа на момент сканирования
+  # Например, 10 — отсекать заказы, где уже больше 10 предложений (null — без ограничения)
+  max_offers: 15
+
+ai:
+  enabled: true
+  provider: "openai"  # openai, openrouter, deepseek, groq, ollama
+  api_key: ""         # Или через переменную окружения AI_API_KEY
+  base_url: null      # Например https://openrouter.ai/api/v1 или https://api.deepseek.com/v1 (null = api.openai.com)
+  model: "gpt-4o-mini"
+  context_file: "config/portfolio.md"
+  instructions_file: "config/instructions.md"
+  prompts_dir: "config/prompts"
+  temperature: 0.7
+  max_tokens: 1500
+  dumping_discount_percent: 35
+
+# Мониторинг бэкофиса Profi.ru (https://profi.ru/backoffice/n.php)
+profi:
+  enabled: false
+  # Строка Cookies из браузера (например, "p_uid=...; sessid=...")
+  cookies: ""
+  url: "https://profi.ru/backoffice/n.php"
+  poll_interval_seconds: null
+
