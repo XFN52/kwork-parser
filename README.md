@@ -226,7 +226,7 @@ flowchart TD
 ### 1. Клонирование репозитория
 
 ```bash
-git clone https://github.com/your-username/kwork-parser.git
+git clone https://github.com/XFN52/kwork-parser.git
 cd kwork-parser
 ```
 
